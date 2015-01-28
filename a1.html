@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="HandheldFriendly" content="true" />
+
     <title>CS 4802 - Assignment 1</title>
     <link href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css' rel='stylesheet'>
     <script src='http://code.jquery.com/jquery.min.js'></script>
@@ -8,19 +11,41 @@
     <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script>
 
     <body class='container'>
-        <h1>CS 4802 - Assignment 1 <small>The Game of Life</small></h1>
+        <h1>CS 4802 - Assignment 1 <br class='visible-xs-block'/> <small>The Game of Life</small></h1>
         <hr/>
 
-        <button id='play-button' class='btn btn-success' onclick='play();'>Play <span class='glyphicon glyphicon-play'></span></button>
-        <button id='pause-button' class='btn btn-primary' onclick='pause();'>Pause <span class='glyphicon glyphicon-pause'></span></button>
-        <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>Step <span class='glyphicon glyphicon-step-forward'></span></button>
-        <span style='float:right'>
-            <button id='randomize-button' class='btn btn-default' onclick='board.randomize(); render()'><span class='glyphicon glyphicon-random'></span> Randomize</button>
-            <button id='kill-all-button' class='btn btn-danger' onclick='board.killAll(); render()'><span class='glyphicon glyphicon-remove'></span> Kill All</button>
-        </span>
-        <br/><br/>
+            <button id='play-button' class='btn btn-success' onclick='play();'>
+                <span class='glyphicon glyphicon-play'></span><br class='visible-xs-block'/>
+                Play
+            </button>
+            <button id='pause-button' class='btn btn-primary' onclick='pause();'>
+                <span class='glyphicon glyphicon-pause'></span><br class='visible-xs-block'/>
+                Pause
+            </button>
+            <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>
+                <span class='glyphicon glyphicon-step-forward'></span><br class='visible-xs-block'/>
+                Step
+            </button>
+            <div class='pull-right' style='direction: rtl'>
+                <button id='kill-all-button' class='btn btn-danger' onclick='board.killAll(); render()'>
+                    <span class='glyphicon glyphicon-remove'></span><br class='visible-xs-block'/>
+                    Kill All
+                </button>
+                <button id='randomize-button' class='btn btn-default' onclick='board.randomize(); render()'>
+                    <span class='glyphicon glyphicon-random'></span><br class='visible-xs-block'/>
+                    Randomize
+                </button>
+            </div>
+        </div>
 
-        <div id='boardContainer' class='well' style='display: inline-block'></div>
+        <br/>
+        <br/>
+
+        <div class='row'>
+            <div class='col-md-6'><div id='boardContainer' class='well'></div></div>
+            <div class='col-md-3'><div id='typesContainer' class='well'><h2>Cell Types</h2></div></div>
+            <div class='col-md-3'><div id='rulesContainer' class='well'><h2>Rules</h2></div></div>
+        </div>
 
         <script src='board.js'></script>
         <script>
@@ -28,8 +53,9 @@
 
             /* Make an SVG object to render to. */
             var boardSvg = d3.select('#boardContainer').append('svg')
-                .attr('width', cellSize * boardSize - 2)
-                .attr('height', cellSize * boardSize - 2)
+                .attr('viewBox', '0 0 ' + (cellSize * boardSize - 2) + ' ' + (cellSize * boardSize - 2))
+                .attr('width', '100%')
+                .attr('height', '100%')
 
             /**
              * Draws the current board to the page by rendering squares in a uniform cartesian grid. Squares are
@@ -63,7 +89,7 @@
                 d3.select('#randomize-button').attr('disabled', true)
                 d3.select('#kill-all-button').attr('disabled', true)
                 d3.select('#play-button').style('display', 'none')
-                d3.select('#pause-button').style('display', 'inline')
+                d3.select('#pause-button').style('display', 'inline-block')
             }
 
             /**
@@ -78,7 +104,7 @@
                 d3.select('#step-button').attr('disabled', null)
                 d3.select('#randomize-button').attr('disabled', null)
                 d3.select('#kill-all-button').attr('disabled', null)
-                d3.select('#play-button').style('display', 'inline')
+                d3.select('#play-button').style('display', 'inline-block')
                 d3.select('#pause-button').style('display', 'none')
             }
 
