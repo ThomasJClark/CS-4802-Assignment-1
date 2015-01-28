@@ -11,9 +11,11 @@
         <h1>CS 4802 - Assignment 1 <small>The Game of Life</small></h1>
         <hr/>
 
+        <button id='play-button' class='btn btn-success' onclick='play();'>Play <span class='glyphicon glyphicon-play'></span></button>
+        <button id='pause-button' class='btn btn-primary' onclick='pause();'>Pause <span class='glyphicon glyphicon-pause'></span></button>
         <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>Step <span class='glyphicon glyphicon-step-forward'></span></button>
         <span style='float:right'>
-            <button id='randomize-button' class='btn btn-primary' onclick='board.randomize(); render()'><span class='glyphicon glyphicon-random'></span> Randomize</button>
+            <button id='randomize-button' class='btn btn-default' onclick='board.randomize(); render()'><span class='glyphicon glyphicon-random'></span> Randomize</button>
             <button id='kill-all-button' class='btn btn-danger' onclick='board.killAll(); render()'><span class='glyphicon glyphicon-remove'></span> Kill All</button>
         </span>
         <br/><br/>
@@ -45,6 +47,39 @@
 
                 /* Make cells that are alive visible and cells that are dead hidden */
                 cells.style('visibility', function(cell) { return cell.isAlive? 'visible' : 'hidden' })
+            }
+
+            /**
+             * Starts periodically updating the board
+             */
+            var playId = undefined;
+            var play = function() {
+                board.step()
+                render()
+                playId = setInterval(function() { board.step(); render() }, 1000)
+
+                /* Disable all settings besides pause, and hide the play button. */
+                d3.select('#step-button').attr('disabled', true)
+                d3.select('#randomize-button').attr('disabled', true)
+                d3.select('#kill-all-button').attr('disabled', true)
+                d3.select('#play-button').style('display', 'none')
+                d3.select('#pause-button').style('display', 'inline')
+            }
+
+            /**
+            * Stops periodically updating the board
+            */
+            var pause = function() {
+                if (playId) {
+                    clearInterval(playId)
+                }
+
+                /* Re-enable all settings, and hide the pause button. */
+                d3.select('#step-button').attr('disabled', null)
+                d3.select('#randomize-button').attr('disabled', null)
+                d3.select('#kill-all-button').attr('disabled', null)
+                d3.select('#play-button').style('display', 'inline')
+                d3.select('#pause-button').style('display', 'none')
             }
 
             board.randomize()
