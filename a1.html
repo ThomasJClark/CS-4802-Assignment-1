@@ -20,7 +20,7 @@
         </span>
         <br/><br/>
 
-        <div id='boardContainer' class='well'></div>
+        <div id='boardContainer' class='well' style='display: inline-block'></div>
 
         <script src='board.js'></script>
         <script>
@@ -82,6 +82,7 @@
                 d3.select('#pause-button').style('display', 'none')
             }
 
+            pause()
             board.randomize()
             render()
         </script>
