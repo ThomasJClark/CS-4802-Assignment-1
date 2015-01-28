@@ -43,6 +43,15 @@ board.setAlive = function(x, y, value) {
 }
 
 /**
+ * Set every cell to dead
+ */
+board.killAll = function() {
+    for (var i = 0; i < board.length; i++) {
+        board[i].isAlive = false
+    }
+}
+
+/**
  * Randomly assign a new state to every cell, with a 70% probability that any given cell will be dead and a 30%
  * probability it will be alive.
  */
