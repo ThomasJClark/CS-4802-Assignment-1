@@ -4,6 +4,11 @@
 
 var boardSize = 20
 var board = new Array(boardSize * boardSize)
+var rules = [
+    { 'aliveBefore': true, 'minNeighborCount': 0, 'maxNeighborCount': 1, 'aliveAfter': false },
+    { 'aliveBefore': true, 'minNeighborCount': 4, 'maxNeighborCount': 8, 'aliveAfter': false },
+    { 'aliveBefore': false, 'minNeighborCount': 3, 'maxNeighborCount': 3, 'aliveAfter': true }
+]
 
 for (var i = 0; i < boardSize * boardSize; i++) {
     board[i] = {
@@ -20,7 +25,7 @@ for (var i = 0; i < boardSize * boardSize; i++) {
  */
 board.isAlive = function(x, y) {
     if (x >= 0 && x < boardSize && y >= 0 && y < boardSize) {
-        return board[x + y * boardSize]
+        return board[x + y * boardSize].isAlive
     } else {
         return false
     }
@@ -44,5 +49,44 @@ board.setAlive = function(x, y, value) {
 board.randomize = function() {
     for (var i = 0; i < board.length; i++) {
         board[i].isAlive = Math.random() > 0.7
+    }
+}
+
+/**
+ * Update the entire board based on the currently defined list of rules
+ */
+board.step = function() {
+    var neighborCounts = new Array(board.length)
+
+    /* Count the number of living neighbors that each cell has.  This must be computed before the main loop in order to
+        capture the state of the board *before* any changes are made during this step. */
+    for (var x = 0; x < boardSize; x++) {
+        for (var y = 0; y < boardSize; y++) {
+            neighborCounts[x + y * boardSize] =
+                (board.isAlive(x - 1, y - 1)? 1 : 0) +
+                (board.isAlive(x,     y - 1)? 1 : 0) +
+                (board.isAlive(x + 1, y - 1)? 1 : 0) +
+                (board.isAlive(x + 1, y    )? 1 : 0) +
+                (board.isAlive(x + 1, y + 1)? 1 : 0) +
+                (board.isAlive(x,     y + 1)? 1 : 0) +
+                (board.isAlive(x - 1, y + 1)? 1 : 0) +
+                (board.isAlive(x - 1, y    )? 1 : 0)
+        }
+    }
+
+    /* For each cell, apply the first rule that matches its current state and number of neighbors, and apply it to the
+        cell. */
+    for (var x = 0; x < boardSize; x++) {
+        for (var y = 0; y < boardSize; y++) {
+            var isAlive = board.isAlive(x, y)
+            var neighborCount = neighborCounts[x + y * boardSize]
+
+            for (var i = rules.length - 1; i >= 0; i--) {
+                if (rules[i].aliveBefore == isAlive && rules[i].minNeighborCount <= neighborCount && rules[i].maxNeighborCount >= neighborCount) {
+                    board.setAlive(x, y, rules[i].aliveAfter)
+                    break;
+                }
+            }
+        }
     }
 }
