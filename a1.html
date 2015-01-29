@@ -49,10 +49,11 @@
         <script src='board.js'></script>
         <script>
             var cellSize = 24;
+            var board = new Board(20)
 
             /* Make an SVG object to render to. */
             var boardSvg = d3.select('#boardContainer').append('svg')
-                .attr('viewBox', '0 0 ' + (cellSize * boardSize - 2) + ' ' + (cellSize * boardSize - 2))
+                .attr('viewBox', '0 0 ' + (cellSize * board.size - 2) + ' ' + (cellSize * board.size - 2))
                 .attr('width', '100%')
                 .attr('height', '100%')
 
@@ -61,7 +62,7 @@
              * rendered only in locations where the cell is alive.
              */
             var render = function() {
-                var cells = boardSvg.selectAll('rect').data(board);
+                var cells = boardSvg.selectAll('rect').data(board.cells);
 
                 cells.enter().append('rect')
                     .style('fill', 'black')
