@@ -14,28 +14,27 @@
         <h1>CS 4802 - Assignment 1 <br class='visible-xs-block'/> <small>The Game of Life</small></h1>
         <hr/>
 
-            <button id='play-button' class='btn btn-success' onclick='play();'>
-                <span class='glyphicon glyphicon-play'></span><br class='visible-xs-block'/>
-                Play
+        <button id='play-button' class='btn btn-success' onclick='play();'>
+            <span class='glyphicon glyphicon-play'></span><br class='visible-xs-block'/>
+            Play
+        </button>
+        <button id='pause-button' class='btn btn-primary' onclick='pause();'>
+            <span class='glyphicon glyphicon-pause'></span><br class='visible-xs-block'/>
+            Pause
+        </button>
+        <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>
+            <span class='glyphicon glyphicon-step-forward'></span><br class='visible-xs-block'/>
+            Step
+        </button>
+        <div class='pull-right' style='direction: rtl'>
+            <button id='kill-all-button' class='btn btn-danger' onclick='board.killAll(); render()'>
+                <span class='glyphicon glyphicon-remove'></span><br class='visible-xs-block'/>
+                Kill All
             </button>
-            <button id='pause-button' class='btn btn-primary' onclick='pause();'>
-                <span class='glyphicon glyphicon-pause'></span><br class='visible-xs-block'/>
-                Pause
+            <button id='randomize-button' class='btn btn-default' onclick='board.randomize(); render()'>
+                <span class='glyphicon glyphicon-random'></span><br class='visible-xs-block'/>
+                Randomize
             </button>
-            <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>
-                <span class='glyphicon glyphicon-step-forward'></span><br class='visible-xs-block'/>
-                Step
-            </button>
-            <div class='pull-right' style='direction: rtl'>
-                <button id='kill-all-button' class='btn btn-danger' onclick='board.killAll(); render()'>
-                    <span class='glyphicon glyphicon-remove'></span><br class='visible-xs-block'/>
-                    Kill All
-                </button>
-                <button id='randomize-button' class='btn btn-default' onclick='board.randomize(); render()'>
-                    <span class='glyphicon glyphicon-random'></span><br class='visible-xs-block'/>
-                    Randomize
-                </button>
-            </div>
         </div>
 
         <br/>
