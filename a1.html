@@ -20,47 +20,54 @@
         <h1>CS 4802 - Assignment 1 <br class='visible-xs-block'/> <small>The Game of Life</small></h1>
         <hr/>
 
-        <button id='play-button' class='btn btn-primary' onclick='play();'>
-            <span class='glyphicon glyphicon-play'></span><br class='visible-xs-block'/>
-            Play
-        </button>
-        <button id='pause-button' class='btn btn-primary' onclick='pause();'>
-            <span class='glyphicon glyphicon-pause'></span><br class='visible-xs-block'/>
-            Pause
-        </button>
-        <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>
-            <span class='glyphicon glyphicon-step-forward'></span><br class='visible-xs-block'/>
-            Step
-        </button>
-        <div class='pull-right' style='direction: rtl'>
-            <button id='kill-all-button' class='btn btn-danger' onclick='board.killAll(); render()'>
-                <span class='glyphicon glyphicon-remove'></span><br class='visible-xs-block'/>
-                Kill All
-            </button>
-            <button id='randomize-button' class='btn btn-default' onclick='board.randomize(); render()'>
-                <span class='glyphicon glyphicon-random'></span><br class='visible-xs-block'/>
-                Randomize
-            </button>
-        </div>
-
-        <br/>
-        <br/>
-
         <div class='row'>
             <div class='col-md-2'>
-                <h2>Presets</h2>
-                <div id='presetsContainer' class='well'></div>
+                <div class='panel panel-default'>
+                    <div class='panel-heading'><h2 class='panel-title'>Cells</h2></div>
+                    <div class='panel-body'>
+                        <button id='kill-all-button' class='btn btn-danger form-control' onclick='board.killAll(); render()'>
+                            <span class='glyphicon glyphicon-remove'></span>
+                            Kill All
+                        </button>
+                        <button id='randomize-button' class='btn btn-default form-control' onclick='board.randomize(); render()'>
+                            <span class='glyphicon glyphicon-random'></span>
+                            Randomize
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class='col-md-6'><div id='boardContainer' class='well'></div></div>
+            <div class='col-md-6'>
+                <div class='panel panel-default'>
+                    <div class='panel-body'>
+                        <div id='boardContainer'></div>
+                    </div>
+                    <div class='panel-footer'>
+                        <button id='play-button' class='btn btn-primary' onclick='play();'>
+                            <span class='glyphicon glyphicon-play'></span><br class='visible-xs-block'/>
+                            Play
+                        </button>
+                        <button id='pause-button' class='btn btn-primary' onclick='pause();'>
+                            <span class='glyphicon glyphicon-pause'></span><br class='visible-xs-block'/>
+                            Pause
+                        </button>
+                        <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>
+                            <span class='glyphicon glyphicon-step-forward'></span><br class='visible-xs-block'/>
+                            Step
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class='col-md-4'>
-                <h2>Rules</h2>
-                <div class='well'>
-                    <p>A cell changes state if it's:</p>
-                    <div id='rulesContainer'></div>
-                    <button class='btn btn-success form-control' onclick=''>
-                        <span class='glyphicon glyphicon-plus'></span>
-                        Add Rule
-                    </button>
+                <div class='panel panel-default'>
+                    <div class='panel-heading'><h2 class='panel-title'>Rules</h2></div>
+                    <div class='panel-body'>
+                        <p>A cell changes state if it's:</p>
+                        <div id='rulesContainer'></div>
+                    </div>
+                </div>
+                <div class='panel panel-default'>
+                    <div class='panel-heading'><h2 class='panel-title'>Rule Presets</h2></div>
+                    <div class='panel-body' id='presetsContainer'></div>
                 </div>
             </div>
         </div>
