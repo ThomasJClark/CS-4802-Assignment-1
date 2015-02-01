@@ -5,11 +5,7 @@
 function Board(size) {
     this.size = size
     this.cells = new Array(this.size * this.size)
-    this.rules = [
-        { 'aliveBefore': true, 'minNeighborCount': 0, 'maxNeighborCount': 1, 'aliveAfter': false },
-        { 'aliveBefore': true, 'minNeighborCount': 4, 'maxNeighborCount': 8, 'aliveAfter': false },
-        { 'aliveBefore': false, 'minNeighborCount': 3, 'maxNeighborCount': 3, 'aliveAfter': true }
-    ]
+    this.game = gamePresets[0]
 
     for (var i = 0; i < this.size * this.size; i++) {
         this.cells[i] = {
@@ -91,8 +87,8 @@ function Board(size) {
                 var isAlive = this.isAlive(x, y)
                 var neighborCount = neighborCounts[x + y * this.size]
 
-                for (var i = this.rules.length - 1; i >= 0; i--) {
-                    var rule = this.rules[i]
+                for (var i = this.game.rules.length - 1; i >= 0; i--) {
+                    var rule = this.game.rules[i]
                     if (rule.aliveBefore == isAlive && rule.minNeighborCount <= neighborCount && rule.maxNeighborCount >= neighborCount) {
                         this.setAlive(x, y, rule.aliveAfter)
                         break;
