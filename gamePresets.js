@@ -1,3 +1,7 @@
+/**
+ * gamePresets.js - Object literals holding rule presets for various Conway-like games
+ */
+
 var gamePresets = [
 	{
 		'name': 'Conway\'s Game of Life',

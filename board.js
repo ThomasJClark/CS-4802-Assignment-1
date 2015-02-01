@@ -1,5 +1,5 @@
 /**
- * board.js - Routines for manipulating a 2d grid cells with two states.
+ * board.js - Routines for manipulating a 2d grid of cells with two states.
  */
 
 function Board(size) {
@@ -16,10 +16,10 @@ function Board(size) {
     }
 
     /**
-    * @param x The x-axis position of a cell, as an integer from 0 to this.size-1
-    * @param y The y-axis position of a cell, as an integer from 0 to this.size-1
-    * @return true if there is a cell at (x, y) and it's alive
-    */
+     * @param x The x-axis position of a cell, as an integer from 0 to this.size-1
+     * @param y The y-axis position of a cell, as an integer from 0 to this.size-1
+     * @return true if there is a cell at (x, y) and it's alive
+     */
     this.isAlive = function(x, y) {
         if (x >= 0 && x < this.size && y >= 0 && y < this.size) {
             return this.cells[x + y * this.size].isAlive
@@ -29,10 +29,10 @@ function Board(size) {
     }
 
     /**
-    * @param x The x-axis position of a cell, as an integer from 0 to this.size-1
-    * @param y The y-axis position of a cell, as an integer from 0 to this.size-1
-    * @param true If true, set the cell at this position to be alive.  Otherwise, set it to be dead.
-    */
+     * @param x The x-axis position of a cell, as an integer from 0 to this.size-1
+     * @param y The y-axis position of a cell, as an integer from 0 to this.size-1
+     * @param true If true, set the cell at this position to be alive.  Otherwise, set it to be dead.
+     */
     this.setAlive = function(x, y, value) {
         if (x >= 0 && x < this.size && y >= 0 && y < this.size) {
             this.cells[x + y * this.size].isAlive = value;
@@ -40,8 +40,8 @@ function Board(size) {
     }
 
     /**
-    * Set every cell to dead
-    */
+     * Set every cell to dead
+     */
     this.killAll = function() {
         for (var i = 0; i < this.cells.length; i++) {
             this.cells[i].isAlive = false
@@ -49,9 +49,9 @@ function Board(size) {
     }
 
     /**
-    * Randomly assign a new state to every cell, with a 70% probability that any given cell will be dead and a 30%
-    * probability it will be alive.
-    */
+     * Randomly assign a new state to every cell, with a 70% probability that any given cell will be dead and a 30%
+     * probability it will be alive.
+     */
     this.randomize = function() {
         for (var i = 0; i < this.cells.length; i++) {
             this.cells[i].isAlive = Math.random() > 0.7
@@ -59,13 +59,13 @@ function Board(size) {
     }
 
     /**
-    * Update the entire board based on the currently defined list of rules
-    */
+     * Update the entire board based on the currently defined list of rules
+     */
     this.step = function() {
         var neighborCounts = new Array(this.cells.length)
 
-        /* Count the number of living neighbors that each cell has.  This must be computed before the main loop in order to
-        capture the state of the board *before* any changes are made during this step. */
+        /* Count the number of living neighbors that each cell has.  This must be computed before the main loop in
+            order to capture the state of the board *before* any changes are made during this step. */
         for (var x = 0; x < this.size; x++) {
             for (var y = 0; y < this.size; y++) {
                 neighborCounts[x + y * this.size] =
@@ -80,8 +80,8 @@ function Board(size) {
             }
         }
 
-        /* For each cell, apply the first rule that matches its current state and number of neighbors, and apply it to the
-        cell. */
+        /* For each cell, apply the first rule that matches its current state and number of neighbors, and apply it to
+            the cell. */
         for (var x = 0; x < this.size; x++) {
             for (var y = 0; y < this.size; y++) {
                 var isAlive = this.isAlive(x, y)
