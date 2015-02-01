@@ -39,7 +39,7 @@
             <div class='col-md-6'>
                 <div class='panel panel-default'>
                     <div class='panel-body'>
-                        <div id='boardContainer'></div>
+                        <svg id='boardContainer' width="100%" height="100%"></svg>
                     </div>
                     <div class='panel-footer'>
                         <button id='play-button' class='btn btn-primary' onclick='play();'>
@@ -61,14 +61,14 @@
                 <div class='panel panel-default'>
                     <div class='panel-heading'><h2 class='panel-title'>Game Presets</h2></div>
                     <div class='panel-body'>
-                        <div id='presetsContainer'></div>
+                        <div id='presetsContainer' class='list-group'></div>
                     </div>
                 </div>
                 <div class='panel panel-default'>
                     <div class='panel-heading'><h2 class='panel-title' id='gameTitle'></h2></div>
                     <div class='panel-body'>
                         <p>A cell changes state if it's:</p>
-                        <div id='rulesContainer'></div>
+                        <div id='rulesContainer' class='list-group'></div>
                     </div>
                 </div>
             </div>
@@ -76,89 +76,8 @@
 
         <script src='gamePresets.js'></script>
         <script src='board.js'></script>
+        <script src='render.js'></script>
         <script>
-            var cellSize = 24;
-            var board = new Board(50)
-
-            /* Make an SVG object to render to. */
-            var boardSvg = d3.select('#boardContainer').append('svg')
-                .attr('viewBox', '0 0 ' + (cellSize * board.size - 2) + ' ' + (cellSize * board.size - 2))
-                .attr('width', '100%')
-                .attr('height', '100%')
-
-            /* Make a div to show the list of game rules in */
-            var ruleList = d3.select('#rulesContainer').append('div').attr('class', 'list-group')
-
-            /* Make a div to show the list of rule presets */
-            var presetsList = d3.select('#presetsContainer').append('div').attr('class', 'list-group')
-
-            /**
-             * Draws the current board to the page by rendering squares in a uniform cartesian grid. Squares are
-             * rendered only in locations where the cell is alive.
-             */
-            var render = function() {
-                var cells = boardSvg.selectAll('rect').data(board.cells)
-                cells.enter().append('rect')
-                    .style('fill', 'black')
-                    .attr('width', cellSize - 2)
-                    .attr('height', cellSize - 2)
-                    .attr('x', function(cell) { return cellSize * cell.x })
-                    .attr('y', function(cell) { return cellSize * cell.y })
-
-                /* Make cells that are alive visible and cells that are dead hidden */
-                cells.style('visibility', function(cell) { return cell.isAlive? 'visible' : 'hidden' })
-
-                /* Render the list of rule presets */
-                var presets = presetsList.selectAll('a').data(gamePresets)
-                presets.enter().append('a')
-                    .text(function(game) { return game.name })
-                    .on('click', function(game) { board.game = game; render() })
-
-                /* The currently assigned one should be styled as active */
-                presets.classed({'list-group-item': true, 'active': function(game) { return game == board.game } })
-
-                /* Render the list of rules */
-                d3.select('#gameTitle').text(board.game.name)
-
-                var rules = ruleList.selectAll('div').data(board.game.rules)
-                rules.enter().append('div').attr('class', 'list-group-item')
-                rules.exit().remove()
-                rules.html(function(rule) {
-                    return '<b>' + (rule.aliveBefore? 'alive' : 'dead') + '</b> and has <b>' +
-                    rule.minNeighborCount + '</b> to <b>' + rule.maxNeighborCount + '</b> neighbors'
-                })
-            }
-
-            /**
-             * Starts periodically updating the board
-             */
-            var playId = undefined;
-            var play = function() {
-                board.step()
-                render()
-                playId = setInterval(function() { board.step(); render() }, 100)
-
-                /* Disable all settings besides pause, and hide the play button. */
-                d3.selectAll('button').attr('disabled', true)
-                d3.select('#pause-button').attr('disabled', null)
-                d3.select('#pause-button').style('display', 'inline-block')
-                d3.select('#play-button').style('display', 'none')
-            }
-
-            /**
-            * Stops periodically updating the board
-            */
-            var pause = function() {
-                if (playId) {
-                    clearInterval(playId)
-                }
-
-                /* Re-enable all settings, and hide the pause button. */
-                d3.selectAll('button').attr('disabled', null)
-                d3.select('#pause-button').style('display', 'none')
-                d3.select('#play-button').style('display', 'inline-block')
-            }
-
             pause()
             board.randomize()
             render()
