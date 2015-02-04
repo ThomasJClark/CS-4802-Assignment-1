@@ -90,7 +90,7 @@ function Board(size) {
                 for (var i = this.game.rules.length - 1; i >= 0; i--) {
                     var rule = this.game.rules[i]
                     if (rule.aliveBefore == isAlive && rule.minNeighborCount <= neighborCount && rule.maxNeighborCount >= neighborCount) {
-                        this.setAlive(x, y, rule.aliveAfter)
+                        this.setAlive(x, y, !isAlive)
                         break;
                     }
                 }

@@ -41,10 +41,11 @@ function render() {
 	var rules = ruleList.selectAll('div').data(board.game.rules)
 	rules.enter().append('div').attr('class', 'list-group-item')
 	rules.exit().remove()
-	rules.html(function(rule) {
+	rules.html(describeRule)
+	/*rules.html(function(rule) {
 		return '<b>' + (rule.aliveBefore? 'alive' : 'dead') + '</b> and has <b>' +
 		rule.minNeighborCount + '</b> to <b>' + rule.maxNeighborCount + '</b> neighbors'
-	})
+	})*/
 }
 
 
@@ -76,4 +77,36 @@ function pause() {
 	d3.selectAll('button').attr('disabled', null)
 	d3.select('#pause-button').style('display', 'none')
 	d3.select('#play-button').style('display', 'inline-block')
+}
+
+/**
+ * Utility function to get a string of HTML with a textual description of a rule
+ */
+function describeRule(rule) {
+	var description = undefined
+	if (rule.aliveBefore) {
+		description = '<b>Die</b> if it'
+	} else {
+		description = '<b>Be born</b> if it'
+	}
+
+	function describeNeighborCount(count) {
+		if (count == 1) return '1 neighbor'
+		return count + ' neighbors'
+	}
+
+	/* Create a string describing the conditions of the rule in the most specific way possible */
+	if (rule.minNeighborCount == 0 && rule.maxNeighborCount == 8) {
+		description += ' is currently ' + (rule.aliveBefore? '<b>alive</b>': '<b>dead</b>')
+	} else if (rule.minNeighborCount == rule.maxNeighborCount) {
+		description += ' has <b>exactly ' + describeNeighborCount(rule.minNeighborCount) + '</b>'
+	} else if (rule.minNeighborCount == 0) {
+		description += ' has <b>' + describeNeighborCount(rule.maxNeighborCount) + ' or less</b>'
+	} else if (rule.maxNeighborCount == 8) {
+		description += ' has <b>at least ' + describeNeighborCount(rule.minNeighborCount) + '</b>'
+	} else {
+		description += ' has <b>' + rule.minNeighborCount + ' to ' + describeNeighborCount(rule.maxNeighborCount) + '</b>'
+	}
+
+	return description
 }
