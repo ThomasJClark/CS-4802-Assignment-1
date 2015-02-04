@@ -25,16 +25,21 @@
                 <div class='panel panel-default'>
                     <div class='panel-heading'><h2 class='panel-title'>Cells</h2></div>
                     <div class='panel-body'>
-                        <button id='kill-all-button' class='btn btn-danger form-control' onclick='board.killAll(); render()'>
-                            <span class='glyphicon glyphicon-remove'></span>
-                            Kill All
-                        </button>
-                        <button id='randomize-button' class='btn btn-default form-control' data-toggle='modal' data-target='#randomizeModal'>
-                            <span class='glyphicon glyphicon-random'></span>
-                            Randomize
-                        </button>
+                        <div class='btn-group-vertical' style='width:100%'>
+                            <button class='btn btn-default form-control' data-toggle='modal' data-target='#randomizeModal'>
+                                <span class='glyphicon glyphicon-random'></span>
+                                Randomize
+                            </button>
+                            <button class='btn btn-danger form-control' onclick='board.killAll(); render()'>
+                                <span class='glyphicon glyphicon-remove'></span>
+                                Kill All
+                            </button>
+                        </div>
                     </div>
                 </div>
+                <p class='alert alert-info'><span class='glyphicon glyphicon-info-sign'></span> Click the board to create or kill cells</p>
+                <p class='alert alert-info'><span class='glyphicon glyphicon-info-sign'></span> Click 'Play' or 'Step' to see the results of the current rules</p>
+                <p class='alert alert-info'><span class='glyphicon glyphicon-info-sign'></span> Choose a game preset to try a different set of rules</p>
             </div>
             <div class='col-md-6'>
                 <div class='panel panel-default'>
@@ -50,7 +55,7 @@
                             <span class='glyphicon glyphicon-pause'></span><br class='visible-xs-block'/>
                             Pause
                         </button>
-                        <button id='step-button' class='btn btn-default' onclick='board.step(); render()'>
+                        <button id='step-button' class='btn btn-default' onclick='board.step(); render(true)'>
                             <span class='glyphicon glyphicon-step-forward'></span><br class='visible-xs-block'/>
                             Step
                         </button>

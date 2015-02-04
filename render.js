@@ -5,7 +5,8 @@
 var cellSize = 24;
 var board = new Board(25)
 
-var boardSvg = d3.select('#boardContainer').attr('viewBox', '0 0 ' + (cellSize * board.size - 2) + ' ' + (cellSize * board.size - 2))
+var boardSvg = d3.select('#boardContainer').attr('viewBox', '0 0 ' + (cellSize * board.size) + ' ' + (cellSize * board.size))
+
 var ruleList = d3.select('#rulesContainer')
 var presetsList = d3.select('#presetsContainer')
 var playId = undefined
@@ -17,19 +18,33 @@ var playId = undefined
 function render(fade) {
     var cells = boardSvg.selectAll('rect').data(board.cells)
     cells.enter().append('rect')
-        .style('fill', 'black')
+        .style('stroke', '#DDDDDD')
+        .style('stroke-width', 2)
+        .attr('vector-effect', 'non-scaling-stroke')
         .attr('width', cellSize - 2)
         .attr('height', cellSize - 2)
-        .attr('x', function(cell) { return cellSize * cell.x })
-        .attr('y', function(cell) { return cellSize * cell.y })
+        .attr('x', function(cell) { return 1 + cellSize * cell.x })
+        .attr('y', function(cell) { return 1 + cellSize * cell.y })
+        /* Create/destroy cells when they're clicked */
+        .on('click', function(cell) {
+            if (playId == undefined) {
+                cell.isAlive = !cell.isAlive
+                render(true)
+            }
+        })
+        /* highlight cells when the cursor is over them */
+        .on('mouseover', function() {
+            if (playId == undefined) d3.select(this).style('stroke', '#337AB7')
+        })
+        .on('mouseout', function() {
+            if (playId == undefined) d3.select(this).style('stroke', '#DDDDDD')
+        })
 
-    /* Make cells that are alive visible and cells that are dead hidden */
+    /* Make cells that are alive black and cells that are dead white */
 	if (fade) {
-        cells.transition()
-            .duration(500)
-            .style('opacity', function(cell) { return cell.isAlive? '100' : '0' })
+        cells.transition().duration(200).style('fill', function(cell) { return cell.isAlive? 'black' : 'white' })
 	} else {
-        cells.style('opacity', function(cell) { return cell.isAlive? '100' : '0' })
+        cells.style('fill', function(cell) { return cell.isAlive? 'black' : 'white' })
 	}
 
     /* Render the list of rule presets */
@@ -73,6 +88,7 @@ function play() {
 function pause() {
     if (playId) {
         clearInterval(playId)
+        playId = undefined
     }
 
     /* Re-enable all settings, and hide the pause button. */
