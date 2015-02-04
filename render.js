@@ -3,7 +3,7 @@
  */
 
 var cellSize = 24;
-var board = new Board(50)
+var board = new Board(25)
 
 var boardSvg = d3.select('#boardContainer').attr('viewBox', '0 0 ' + (cellSize * board.size - 2) + ' ' + (cellSize * board.size - 2))
 var ruleList = d3.select('#rulesContainer')
@@ -14,7 +14,7 @@ var playId = undefined
  * Draws the current board to the page by rendering squares in a uniform cartesian grid. Squares are
  * rendered only in locations where the cell is alive.
  */
-function render() {
+function render(fade) {
     var cells = boardSvg.selectAll('rect').data(board.cells)
     cells.enter().append('rect')
         .style('fill', 'black')
@@ -24,7 +24,13 @@ function render() {
         .attr('y', function(cell) { return cellSize * cell.y })
 
     /* Make cells that are alive visible and cells that are dead hidden */
-    cells.style('visibility', function(cell) { return cell.isAlive? 'visible' : 'hidden' })
+	if (fade) {
+        cells.transition()
+            .duration(500)
+            .style('opacity', function(cell) { return cell.isAlive? '100' : '0' })
+	} else {
+        cells.style('opacity', function(cell) { return cell.isAlive? '100' : '0' })
+	}
 
     /* Render the list of rule presets */
     var presets = presetsList.selectAll('a').data(gamePresets)
@@ -42,10 +48,6 @@ function render() {
     rules.enter().append('div').attr('class', 'list-group-item')
     rules.exit().remove()
     rules.html(describeRule)
-    /*rules.html(function(rule) {
-        return '<b>' + (rule.aliveBefore? 'alive' : 'dead') + '</b> and has <b>' +
-        rule.minNeighborCount + '</b> to <b>' + rule.maxNeighborCount + '</b> neighbors'
-    })*/
 }
 
 

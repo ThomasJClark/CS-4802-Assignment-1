@@ -49,12 +49,14 @@ function Board(size) {
     }
 
     /**
-     * Randomly assign a new state to every cell, with a 70% probability that any given cell will be dead and a 30%
-     * probability it will be alive.
+     * Randomly assign a new state to every cell.
+     *
+     * @param p The probability that any individual cell will be alive
      */
-    this.randomize = function() {
+    this.randomize = function(p) {
+        console.log(p)
         for (var i = 0; i < this.cells.length; i++) {
-            this.cells[i].isAlive = Math.random() > 0.7
+            this.cells[i].isAlive = Math.random() < p
         }
     }
 
