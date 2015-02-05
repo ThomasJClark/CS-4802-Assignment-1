@@ -89,7 +89,13 @@ function render(fade) {
 function play() {
     board.step()
     render()
-    playId = setInterval(function() { board.step(); render() }, 100)
+    playId = setInterval(function() {
+        if (board.step()) {
+            render()
+        }  else {
+            pause()
+        }
+    }, 1000)
 
     /* Disable all settings besides pause, and hide the play button. */
     d3.selectAll('button').attr('disabled', true)

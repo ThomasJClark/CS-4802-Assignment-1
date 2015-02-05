@@ -62,6 +62,7 @@ function Board(size) {
 
     /**
      * Update the entire board based on the currently defined list of rules
+     * @return true if at least one cell changed
      */
     this.step = function() {
         var neighborCounts = new Array(this.cells.length)
@@ -82,6 +83,8 @@ function Board(size) {
             }
         }
 
+        var changed = false
+
         /* For each cell, apply the first rule that matches its current state and number of neighbors, and apply it to
             the cell. */
         for (var x = 0; x < this.size; x++) {
@@ -93,10 +96,13 @@ function Board(size) {
                     var rule = this.game.rules[i]
                     if (rule.aliveBefore == isAlive && rule.minNeighborCount <= neighborCount && rule.maxNeighborCount >= neighborCount) {
                         this.setAlive(x, y, !isAlive)
+                        changed = true
                         break;
                     }
                 }
             }
         }
+
+        return changed;
     }
 }
