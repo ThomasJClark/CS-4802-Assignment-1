@@ -21,7 +21,7 @@
     </style>
 
     <body class='container'>
-        <h1>CS 4802 - Assignment 1 <br class='visible-xs-block'/> <small>The Game of Life</small></h1>
+        <h1>CS 4802 Assignment 1: <br class='visible-xs-block'/>The Game of Life <small>Thomas Clark</small></h1>
         <hr/>
 
         <div class='row'>
@@ -111,12 +111,14 @@
                         <h4 class='modal-title'>Add Rule</h4>
                     </div>
                     <div class='modal-body'>
-                        <p><b>Kill or create any cell that is:</b></p>
-                        <p class='form-control'>
-                            <input type='radio' name='addRuleAliveBefore' value='true'>alive</input>
-                            <input type='radio' name='addRuleAliveBefore' value='false'>dead</input>
+                        <h3>Rule settings</h3>
+                        <p>
+                            <input type='radio' name='addRuleAliveBefore' value='true'> Kill any living cells</input>
                         </p>
-                        <p><b>and has:</b></p>
+                        <p>
+                            <input type='radio' name='addRuleAliveBefore' value='false'> Create any new cells</input>
+                        </p>
+                        <p><b>that have...</b></p>
                         <div class='input-group'>
                             <input class='form-control' type='number' min='0' max='8' value='0' id='addRuleMinNeighborCount'></input>
                             <span class='input-group-addon'>to</span>
