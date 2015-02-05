@@ -2,6 +2,8 @@
  * gamePresets.js - Object literals holding rule presets for various Conway-like games
  */
 
+var customGame = { 'name': 'Custom', 'rules': [] }
+
 var gamePresets = [
     {
         'name': 'Conway\'s Game of Life',
@@ -52,5 +54,6 @@ var gamePresets = [
             { 'aliveBefore': false, 'minNeighborCount': 3, 'maxNeighborCount': 8 },
             { 'aliveBefore': true, 'minNeighborCount': 0, 'maxNeighborCount': 5 },
         ]
-    }
+    },
+    customGame
 ]

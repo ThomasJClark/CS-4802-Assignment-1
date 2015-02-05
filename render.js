@@ -63,6 +63,23 @@ function render(fade) {
     rules.enter().append('div').attr('class', 'list-group-item')
     rules.exit().remove()
     rules.html(describeRule)
+
+    /* For custom games, show options to delete rules */
+    if (board.game == customGame) {
+        rules.append('button')
+            .attr('class', 'close deleteRuleButton')
+            .html('&times;')
+            .on('click', function(rule, index) {
+                board.game.rules.splice(index, 1)
+                render()
+            })
+    }
+
+    /* Show a button to add a new rule only if the custom mode is selected */
+    d3.select('#addRuleButton').style('display', board.game === customGame? 'block' : 'none')
+
+    /* Show the 'A cell will' label only if there's actually at least one rule below it */
+    d3.select('#rulesLabel').style('display', (board.game.rules.length > 0)? 'block' : 'none')
 }
 
 
