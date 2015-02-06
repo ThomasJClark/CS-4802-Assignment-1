@@ -145,8 +145,8 @@
                     'maxNeighborCount': d3.select('#addRuleMaxNeighborCount')[0][0].value,
                 }
 
-                // Add the rule to the last game preset, which is the custom one.
-                gamePresets[gamePresets.length - 1].rules.push(rule)
+                // Add the rule to the custom game preset.
+                customGame.rules.push(rule)
                 render()
             }
 
