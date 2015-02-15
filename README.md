@@ -37,3 +37,23 @@ Any cell that does not match any custom rule will remain in its previous state. 
 Most of the free-form features of the simulation are technical.  It features a selection of rule presets, a flexible set of way to create randomized or manually specified boards, and a system for prototyping entirely new sets of rules.  A concise textual description for each rule is also generated.  In addition, the page uses responsive design, so it will adjust itself appropriately on smartphones.
 ### Biological
 The custom rule feature can be used to add biological significance to simulations.  Instead of just viewing the results of a single set of arbitrary rules like Conway's Game, one can add a custom set of rules to visualize an approximation of a biological process.
+
+## Lab 3
+### Currently Supported Interactions
+Interactions currently supported (prior to Lab 3) include:
+* #### Playing/pausing the simulation
+Playing the simulation makes it easy to see the abstract results of the current rules and the state of the board over many generations.  The ability to pause supports user understanding by providing a chance to see what an individual generation looks like.
+
+* #### Selecting between different game presets
+The user can choose one of many different game presets, such as Conway's Game of Life, which helps the user determine how simple rule changes affect the outcome.
+
+* #### Stepping the simulation one generation at a time
+The ability to step the simulation to the next generation improves user understanding by showing the specific results  of one application of the game's rules.
+
+* #### Randomizing the board to a specified percentage of living cells
+Randomizing the board doesn't do much to improve user understanding, but allowing the user to specify a custom percentage improves the effectiveness of other features that present under certain conditions, such as a very high density of cells.
+
+* #### Creating cells, killing cells, and killing all cells
+The user can click the board to create or kill individual cells, and click a button to kill all cells on the board.  Allowing predetermined initial configurations in addition to randomized ones supports user understanding.  It allows the user to test hypotheses about  patterns in the current rules, rather than just randomizing the board and looking for patterns.
+
+* #### Adding new rules to the custom game mode
