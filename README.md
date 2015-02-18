@@ -57,3 +57,18 @@ Randomizing the board doesn't do much to improve user understanding, but allowin
 The user can click the board to create or kill individual cells, and click a button to kill all cells on the board.  Allowing predetermined initial configurations in addition to randomized ones supports user understanding.  It allows the user to test hypotheses about  patterns in the current rules, rather than just randomizing the board and looking for patterns.
 
 * #### Adding new rules to the custom game mode
+This supports user understanding by allowing the user to rapidly prototype new game designs.
+
+### Opportunities for more interaction
+* #### Show percentage of cells that are alive over time
+The user could toggle on and off an alternate view to show the percentage of cells that are currently alive, as well as a time-series chart showing the historical percentage of living cells.
+
+* #### Identify clusters of cells
+The user to set parameters for detecting clusters of cells, and be able to see how these clusters form and move around over time.
+
+* #### View history
+The user could have access to a slider to go back to previous states of the board.  This would help show the results of a particular initial state better than only being able to watch it once.
+##### Mockup
+![](http://i.imgur.com/7pQ6v3c.png)
+
+
